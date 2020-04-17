@@ -1,0 +1,6 @@
+__pycache__
+.DS_Store
+*/.DS_Store
+__init__.py
+clean_data/full/.DS_Store
+logs/*

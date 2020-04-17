@@ -40,7 +40,7 @@ def test_loop(model, test_dataloader):
     return (correct / total * 100), running_loss
 
 
-def training_loop(model, corpus, labels, num_epochs=100, train_split=0.9, model_name=None):
+def training_loop(model, corpus, labels, num_epochs=100, train_split=0.9, model_name=None, device=torch.device("cpu")):
 
     # log_writer = Logger("./logs", model_name if model_name is not None else 'noname')
 
@@ -62,6 +62,7 @@ def training_loop(model, corpus, labels, num_epochs=100, train_split=0.9, model_
         for i, data in enumerate(trainloader, 0):
             # get the inputs; data is a list of [inputs, labels]
             inputs, labels = data
+            inputs = inputs.to(device)
             # print(inputs.shape, labels.shape)
 
             # zero the parameter gradients
@@ -87,7 +88,7 @@ def training_loop(model, corpus, labels, num_epochs=100, train_split=0.9, model_
 
 
 
-        print('Finished Training')
+    print('Finished Training')
 
 
 def main():
@@ -109,15 +110,17 @@ def main():
     print(f'Vector length = {vector_length}')
 
     model = LanguageNet(vector_length, word_length, num_languages)
+    model = model.to(device)
     # model = ConvLanguageNet(vector_length, word_length, num_languages)
     model.train()
 
-    training_loop(model, corpus, labels, model_name='Linear')
+    training_loop(model, corpus, labels, model_name='Linear', device=device)
 
     model = ConvLanguageNet(vector_length, word_length, num_languages)
+    model = model.to(device)
     model.train()
 
-    training_loop(model, corpus, labels, model_name='Convolution')
+    training_loop(model, corpus, labels, model_name='Convolution', device=device)
 
 
 if __name__ == '__main__':

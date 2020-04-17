@@ -42,7 +42,7 @@ def test_loop(model, test_dataloader):
 
 def training_loop(model, corpus, labels, num_epochs=100, train_split=0.9, model_name=None):
 
-    log_writer = Logger("./logs", model_name if model_name is not None else 'noname')
+    # log_writer = Logger("./logs", model_name if model_name is not None else 'noname')
 
     train_split = int(train_split * len(corpus))
     train_dataset = Dataset(corpus[:train_split], labels[:train_split])
@@ -87,12 +87,13 @@ def training_loop(model, corpus, labels, num_epochs=100, train_split=0.9, model_
 
 
 
-print('Finished Training')
+        print('Finished Training')
 
 
 def main():
     torch.manual_seed(24)
-
+    device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
+    print(device)
     data_dir = './clean_data/full'
     model_name = '3LayerModel'
     word_length = 8

@@ -25,6 +25,7 @@ def test_loop(model, test_dataloader):
 
             inputs, labels = data
 
+            inputs = inputs.to(device=torch.device('cuda'))
             outputs = model(inputs)
             loss = criterion(outputs, labels)
 

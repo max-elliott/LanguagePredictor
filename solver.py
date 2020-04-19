@@ -62,7 +62,7 @@ def training_loop(model, corpus, labels, num_epochs=100, train_split=0.9, model_
         for i, data in enumerate(trainloader, 0):
             # get the inputs; data is a list of [inputs, labels]
             inputs, labels = data
-            inputs = inputs.to(device)
+            inputs = inputs.to(device=torch.device('cuda'))
             # print(inputs.shape, labels.shape)
 
             # zero the parameter gradients
@@ -70,7 +70,7 @@ def training_loop(model, corpus, labels, num_epochs=100, train_split=0.9, model_
 
             # forward + backward + optimize
             outputs = model(inputs)
-            loss = criterion(outputs, labels)
+            loss = criterion(outputs.cpu(), labels)
             loss.backward()
             optimizer.step()
 

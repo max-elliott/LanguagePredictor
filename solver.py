@@ -27,7 +27,7 @@ def test_loop(model, test_dataloader):
 
             inputs = inputs.to(device=torch.device('cuda'))
             outputs = model(inputs)
-            loss = criterion(outputs, labels)
+            loss = criterion(outputs.cpu(), labels)
 
             _, predicted = torch.max(outputs.data, 1)
             total += labels.size(0)

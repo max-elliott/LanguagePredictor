@@ -31,7 +31,7 @@ def test_loop(model, test_dataloader):
 
             _, predicted = torch.max(outputs.data, 1)
             total += labels.size(0)
-            correct += (predicted == labels).sum().item()
+            correct += (predicted.cpu() == labels).sum().item()
 
             running_loss += loss.item()
 

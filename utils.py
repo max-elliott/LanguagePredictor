@@ -38,7 +38,7 @@ def index2onehot(index_word, vector_length, word_length=-1):
     onehot_word = torch.zeros(word_length, vector_length)
 
     for i, idx in enumerate(index_word):
-        if i >= output_word_length:
+        if i >= word_length:
             break
         onehot_word[i, idx] = 1
 

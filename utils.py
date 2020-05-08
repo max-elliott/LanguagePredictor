@@ -6,12 +6,13 @@ def generate_index_dict(corpus):
 
     char2int_dict = {}
 
-    current_index = 0
+    current_index = 1
     for word in corpus:
         for c in word:
             if c not in char2int_dict.keys() and not c.isspace() and not '\n' in c:
                 char2int_dict[c] = current_index
                 current_index += 1
+    char2int_dict['<pad>'] = 0
 
     return char2int_dict
 
@@ -37,7 +38,7 @@ def index2onehot(index_word, vector_length, word_length=-1):
     onehot_word = torch.zeros(word_length, vector_length)
 
     for i, idx in enumerate(index_word):
-        if i >= word_length:
+        if i >= output_word_length:
             break
         onehot_word[i, idx] = 1
 
@@ -52,7 +53,11 @@ def indexCorpus2onehotCorpus(index_corpus, vector_length=-1, word_length=-1):
                     vector_length = idx
         vector_length += 1
 
-    print(vector_length)
+    if word_length < 0:
+        word_length = max([len(word) for word in index_corpus])
+
+    print(f"vector_length: {vector_length}")
+    print(f"vector_length: {word_length}")
 
     onehot_words = []
 

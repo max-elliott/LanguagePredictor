@@ -19,7 +19,7 @@ def _shuffle_data(x, labels):
     return shuffled_x, shuffled_labels
 
 
-def process_data(data_dir, word_length=10, shuffle=True):
+def process_data(data_dir, word_length=-1, shuffle=True):
 
     input_files = [file for file in os.listdir(data_dir)]
 
